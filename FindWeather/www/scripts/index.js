@@ -3,8 +3,6 @@
 // To debug code on page load in cordova-simulate or on Android devices/emulators: launch your app, set breakpoints, 
 // and then run "window.location.reload()" in the JavaScript Console.
 
-//import { getWeatherWithGeoLocation } from "./weather.js";
-
 (function () {
     "use strict";
 
@@ -23,7 +21,8 @@
         //receivedElement.setAttribute('style', 'display:block;');
 
 
-        $('#get-weather-btn').click(getWeatherWithCityName); 
+        //$('#get-weather-btn').click(getWeatherWithCityName); 
+        getWeatherWithGeoLocation(); 
     };
 
     function onPause() {

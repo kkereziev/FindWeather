@@ -32,6 +32,26 @@ function showWeatherData(results) {
     }
 }
 
+function showWeatherWithGeolocationData(results){
+    if (results.weather.length) {
+        $('#error-msg').hide();
+        $('#weather-data').show();
+        $('#title').text(results.name);
+        $('#temperature').text(Math.round((results.main.temp - 32)*5/9));
+        $('#wind').text(results.wind.speed);
+        $('#humidity').text(results.main.humidity);
+        $('#visibility').text(results.weather[0].main);
+        var sunriseDate = new Date(results.sys.sunrise * 1000);
+        $('#sunrise').text(sunriseDate.toLocaleTimeString());
+        var sunsetDate = new Date(results.sys.sunset * 1000);
+        $('#sunset').text(sunsetDate.toLocaleTimeString());
+    } else {
+        $('#weather-data').hide();
+        $('#error-msg').show();
+        $('#error-msg').text("Error retrieving data. ");
+    }
+}
+
 //export
     function getWeatherWithGeoLocation() {
     //Метод getCurrentPosition вика Cordova Geolocation API
@@ -41,7 +61,6 @@ function showWeatherData(results) {
     $('#error-msg').show();
     $('#error-msg').text('Determining your current location ...');
     $('#get-weather-btn').prop('disabled', true);
-
 }
 
 function onGetLocationSuccess(position) {
@@ -52,7 +71,7 @@ function onGetLocationSuccess(position) {
         + '&lon=' + longitude + '&appid=' + OpenWeatherAppKey + '&units=imperial';
     $('#get-weather-btn').prop('disabled', false);
     $.getJSON(queryString, function (results) {
-        showWeatherData(results);
+        showWeatherWithGeolocationData(results);
     }).fail(function (jqXHR) {
         $('#error-msg').show();
         $('#error-msg').text("Error retrieving data. " + jqXHR.statusText);
