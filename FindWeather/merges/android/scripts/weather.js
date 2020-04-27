@@ -34,10 +34,10 @@ function showWeatherData(results) {
 }
 
 function showWeatherWithGeolocationData(results) {
-    if (results.weather.length) {
+    if (results.list.length) {
         $('#error-msg').hide();
-        $('#weather-data').show();
-        $('#title').text(results.name);
+        $('#weather-data').show(); //да се показва листа с инфо за града    
+        $('#title').text(results.city.name); //име на града
         $('#temperature').text(Math.round((results.main.temp - 32)*5/9));
         $('#wind').text(results.wind.speed);
         $('#humidity').text(results.main.humidity);
@@ -70,8 +70,8 @@ function onGetLocationSuccess(position) {
     //Изтегляне на информация за локацията на устройството от обекта position
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
-    var queryString = 'http://api.openweathermap.org/data/2.5/weather?lat=' + latitude
-        + '&lon=' + longitude + '&appid=' + OpenWeatherAppKey + '&units=imperial';
+    var queryString ='http://api.openweathermap.org/data/2.5/forecast?lat=' + latitude
+        + '&lon=' + longitude + '&appid=' + OpenWeatherAppKey; //'http://api.openweathermap.org/data/2.5/weather?lat=' + latitude + '&lon=' + longitude + '&appid=' + OpenWeatherAppKey + '&units=imperial';
     $('#get-weather-btn').prop('disabled', false);
     $.getJSON(queryString, function (results) {
         showWeatherWithGeolocationData(results);
